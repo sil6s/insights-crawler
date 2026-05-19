@@ -4,6 +4,31 @@ Chrome extension MVP for exporting authorized Help Center collections into ZIP i
 
 The extension runs in the user's Chrome session. It does not collect credentials, does not ask for pasted cookies, does not store browser session data, and does not send exported help content to a backend.
 
+## Summary
+
+This project is a **Chrome Extension (Manifest V3)** that crawls Help Center pages you already have access to in your signed-in Chrome session and exports a local ZIP index.
+
+## Technical Breakdown
+
+### Architecture
+- **Popup UI (`popup.html` + `popup.js`)**: Lets you choose crawl scope and start the crawl.
+- **Background Service Worker (`background.js`)**: Orchestrates crawl jobs, tab/fetch behavior, and ZIP generation.
+- **Content Script (`contentScript.js`)**: Reads page DOM data from matching Help Center pages when needed.
+- **Manifest (`manifest.json`)**: Declares permissions, hosts, background worker, and content script wiring.
+
+### Crawl Flow
+1. User opens popup and chooses target scope.
+2. Background worker discovers collection/article URLs.
+3. Worker fetches article content with authenticated browser context (`credentials: include`).
+4. Parser prefers structured Next.js data (`script#__NEXT_DATA__`), with DOM fallback extraction.
+5. Aggregated article records are serialized and downloaded as one ZIP file.
+
+### Output Format
+- `articles-index.json`
+- `metadata.json`
+- `articles/*.json`
+- `warnings.json` (only when warnings exist)
+
 ## What It Does
 
 Help Center Crawler creates a downloadable ZIP index from Help Center articles that the signed-in user can already access in Chrome. The ZIP includes article metadata, source links, extracted article text, markdown, and warnings for anything that could not be indexed.
@@ -23,6 +48,18 @@ Help Center Crawler creates a downloadable ZIP index from Help Center articles t
 - No database or persistent article storage is used by the app.
 - No cookies, credentials, or browser session data are exported.
 - Content stays local until the user chooses what to do with the downloaded ZIP.
+
+## Quick Load Folder (No Build Required)
+
+If you download this repository as a ZIP and want a folder that is already ready for **Load unpacked**, use:
+
+```text
+chrome-extension-unpacked
+```
+
+That folder includes `manifest.json`, `background.js`, `contentScript.js`, `popup.html`, and compiled assets in the correct Chrome extension layout.
+
+Note: the unpacked folder intentionally excludes icon PNG binaries to keep repository diffs text-only; Chrome can still load and run the extension normally.
 
 ## Build
 
@@ -54,10 +91,10 @@ chrome://extensions
 6. Select this folder:
 
 ```text
-/Users/silascurry/Documents/GitHub/survey-gpt-buddy/extension/dist
+chrome-extension-unpacked
 ```
 
-Do not select the repo root or the `extension` source folder. Chrome needs the built `extension/dist` folder because that is where `manifest.json` is generated.
+Do not select the `extension` source folder. Select `chrome-extension-unpacked` because it already contains the built extension output and `manifest.json`.
 
 7. Confirm **Help Center Crawler** appears in the Chrome extensions list.
 8. Pin the extension from the Chrome extensions menu if you want it visible in the toolbar.
@@ -83,7 +120,7 @@ https://help.numerator.com/en/
 help-center-index-YYYY-MM-DD.zip
 ```
 
-If Chrome says the manifest is missing, the wrong folder was selected. Load unpacked must point at `extension/dist`, because that folder contains `manifest.json`, `background.js`, `contentScript.js`, and `popup.html`.
+If Chrome says the manifest is missing, the wrong folder was selected. Load unpacked must point at `chrome-extension-unpacked`, because that folder contains `manifest.json`, `background.js`, `contentScript.js`, and `popup.html`.
 
 ## Crawler Modes
 
