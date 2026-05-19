@@ -1,0 +1,35 @@
+{
+  "manifest_version": 3,
+  "name": "Help Center Crawler",
+  "description": "Export authorized Help Center collections into searchable ZIP indexes.",
+  "version": "0.1.0",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Help Center Crawler"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "activeTab",
+    "downloads",
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://help.numerator.com/*",
+    "https://insights.numerator.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://help.numerator.com/*"
+      ],
+      "js": [
+        "contentScript.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}
