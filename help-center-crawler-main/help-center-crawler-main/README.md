@@ -107,18 +107,6 @@ That folder includes `manifest.json`, `background.js`, `contentScript.js`, `popu
 
 Note: the unpacked folder intentionally excludes icon PNG binaries to keep repository diffs text-only; Chrome can still load and run the extension normally.
 
-## Quick Load Folder (No Build Required)
-
-If you download this repository as a ZIP and want a folder that is already ready for **Load unpacked**, use:
-
-```text
-chrome-extension-unpacked
-```
-
-That folder includes `manifest.json`, `background.js`, `contentScript.js`, `popup.html`, and compiled assets in the correct Chrome extension layout.
-
-Note: the unpacked folder intentionally excludes icon PNG binaries to keep repository diffs text-only; Chrome can still load and run the extension normally.
-
 ## Build
 
 ```bash
