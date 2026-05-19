@@ -1,0 +1,26 @@
+{
+  "name": "help-center-crawler",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npm run extension:dev",
+    "extension:dev": "vite --config extension/vite.config.ts",
+    "extension:build": "vite build --config extension/vite.config.ts",
+    "build": "npm run extension:build"
+  },
+  "dependencies": {
+    "@types/chrome": "^0.1.42",
+    "@vitejs/plugin-react": "latest",
+    "jszip": "^3.10.1",
+    "react": "latest",
+    "react-dom": "latest",
+    "typescript": "latest",
+    "vite": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest"
+  }
+}
