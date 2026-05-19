@@ -17,7 +17,6 @@ The extension runs entirely in the browser context:
 ## Technical Breakdown
 
 ### Architecture
-
 - **Popup UI (`popup.html` + `popup.js`)**
   - Presents crawl scope options (entire site or specific collection).
   - Starts crawl jobs and displays progress/status.
@@ -95,6 +94,18 @@ Help Center Crawler creates a downloadable ZIP index from Help Center articles t
 - No database or persistent article storage is used by the app.
 - No cookies, credentials, or browser session data are exported.
 - Exported content remains local unless the user explicitly shares the output ZIP.
+
+## Quick Load Folder (No Build Required)
+
+If you download this repository as a ZIP and want a folder that is already ready for **Load unpacked**, use:
+
+```text
+chrome-extension-unpacked
+```
+
+That folder includes `manifest.json`, `background.js`, `contentScript.js`, `popup.html`, and compiled assets in the correct Chrome extension layout.
+
+Note: the unpacked folder intentionally excludes icon PNG binaries to keep repository diffs text-only; Chrome can still load and run the extension normally.
 
 ## Quick Load Folder (No Build Required)
 
